@@ -1,35 +1,80 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+""""""""""""""""""""""""
+"         Plug         "
+""""""""""""""""""""""""
+" https://github.com/junegunn/vim-plug
+" :PlugUpgrade to upgrade vim-plug itself
+" :PlugInstall to install
+" :PlugInstall! to force reinstall
+" :PlugUpdate to update
+call plug#begin('~/.vim/plugged')
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Multi cursor
+Plug 'terryma/vim-multiple-cursors'
+" Colorscheme
+Plug 'tomasr/molokai'
+" Find and replace
+Plug 'dyng/ctrlsf.vim'
+" CtrlP Go to file
+Plug 'kien/ctrlp.vim'
+" Close pairs ( ) { }
+Plug 'Raimondi/delimitMate'
+" Smart comment
+" [count]<leader> cc cn c<space> cm ci cs cy c$ cA cl cb cu
+Plug 'scrooloose/nerdcommenter'
+" Auto completion
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer'}  " Put .ycm_extra_conf.py in any folder above you file
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'ervandew/supertab'
-Plugin 'Rip-Rip/clang_complete'
+call plug#end()
 
-"Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-"Plugin 'git://git.wincent.com/command-t.git'
-"Plugin 'file:///home/gmarik/path/to/plugin'
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
 
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
+""""""""""""""""""""""""
+"     vim Settings     "
+""""""""""""""""""""""""
 syntax on
-set nobackup noswapfile noundofile
+set nocp nobackup nowritebackup
+set noswapfile noundofile
+set backspace=indent,eol,start  " more powerful backspacing
+set number
+set tabstop=4
+set shiftwidth=4
+
+colo molokai
+
+
+""""""""""""""""""""""""
+"     Key Mapping      "
+""""""""""""""""""""""""
+let mapleader = ","
+" window maps
+nmap <leader>h <C-W>h
+nmap <leader>j <C-W>j
+nmap <leader>k <C-W>k
+nmap <leader>l <C-W>l
+" save map
+nmap <leader>w :w<CR>
+nmap <leader>q :q<CR>
+nmap <leader>wq :wq<CR>
+" NETRW
+nnoremap <leader>e :Explore<CR>
+nmap <leader>g :CtrlPMixed<CR>
+
+
+""""""""""""""""""""""""
+"   Plugins Settings   "
+""""""""""""""""""""""""
+" delimitMate
+let delimitMate_expand_cr = 1
+
+" YCM
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_autoclose_preview_window_after_completion= 1
+nnoremap <leader>r :YcmCompleter GoTo<CR>
+nnoremap gd :YcmCompleter GoTo<CR>
+
+" CtrlSF
+"Find selected word
+vmap <leader>f <Plug>CtrlSFVwordExec
+"Find word in cursor
+"nmap <leader>f <Plug>CtrlSFCwordPath
+"Find word in cursor with boundary
+nmap <leader>f <Plug>CtrlSFCCwordPath<CR>
